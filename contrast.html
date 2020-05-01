@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/page.css">
+    <script src="./js/vue/vue.js"></script>
+    <script src="./js/vue/vuetify.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="./js/common.js"></script>
+</head>
+<body>
+<div id="contrastVm" class="compare-cont">
+    <div class="w pagestyle">
+        <div class="compare-main">
+            <div class="compare-goods">
+                <table class="compare-table1">
+                    <colgroup>
+                        <col class="title-col">
+                        <col class="cont-col">
+                        <col class="cont-col">
+                        <col class="cont-col">
+                        <col class="cont-col">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>
+                            <div class="tb-checkbox J-compare-highlight" clstag="shangpin|keycount|compare|glbutongxiang">
+                                <input type="checkbox" id="tbCheck1">
+                                <label for="tbCheck1">高亮不同项</label>
+                            </div>
+                            <div class="tb-checkbox J-compare-equal" clstag="shangpin|keycount|compare|ycxiangtongxiang">
+                                <input type="checkbox" id="tbCheck2">
+                                <label for="tbCheck2">隐藏相同项</label>
+                            </div>
+                        </th>
+                        <td v-for="sku in contrastSpuList" :key="sku.id">
+                            <div class="goods-item" data-sku="100009219518">
+                                <div class="p-img" clstag="shangpin|keycount|compare|mainpic">
+                                    <a href="javascript:void(0);" target="_blank">
+                                        <img :src="sku.images" height="150">
+                                        <div>
+                                            <span>{{sku.title}}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="p-slider">
+                                    <span class="slider-prev slider-disable"></span>
+                                    <span class="slider-next"></span>
+                                </div>
+                                <div class="p-price">
+                                    <span price="p100009219518">¥&nbsp;<strong>{{ly.formatPrice(sku.price)}}</strong></span>
+                                </div>
+                                <div class="p-btnbox">
+                                    <a href="XXXX.html" target="_blank" class="btn-primary" clstag="shangpin|keycount|compare|ljchakan">立即查看</a>
+                                    <a href="javascript:;" class="btn-del" clstag="shangpin|keycount|compare|shanchu" style="display: none;">删除</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <table class="compare-table2" id="compareResult">
+                <colgroup>
+                    <col class="title-col">
+                    <col class="cont-col">
+                    <col class="cont-col">
+                    <col class="cont-col">
+                    <col class="cont-col">
+                </colgroup>
+                <tbody>
+                <tr class="tr-item" clstag="shangpin|keycount|compare|dianpu">
+                    <th>
+                        <div class="tb-title">
+                            店铺
+                        </div>
+                    </th>
+                    <td>
+                        <div class="p-shop">
+                            <a href="//honor.jd.com" target="_blank" title="荣耀京东自营旗舰店">荣耀京东自营旗舰店</a>
+                            <em class="u-jd">京东自营</em>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="p-shop">
+                            <a href="//honor.jd.com" target="_blank" title="荣耀京东自营旗舰店">荣耀京东自营旗舰店</a>
+                            <em class="u-jd">京东自营</em>
+                        </div>
+                    </td>
+                    <td class="td-empty">
+                        &nbsp;
+                    </td>
+                    <td class="td-empty">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr class="tr-item goods-comment">
+                    <th>
+                        <div class="tb-title">
+                            评价
+                        </div>
+                    </th>
+                    <td>
+                        <div class="p-evaluate">
+                            <div class="p-score">
+                                <span class="num"><strong>97</strong>%</span><em class="tit">好评度</em>
+                            </div>
+                            <div class="p-tags">
+                                <em>反应超快</em><em>清晰度高</em><em>颜色绚丽</em><em>色彩饱满</em>
+                            </div>
+                        </div>
+                        <div class="p-comment">
+                            <span class="tit">累计评价</span>309453 条
+                        </div>
+                    </td>
+                    <td>
+                        <div class="p-evaluate">
+                            <div class="p-score">
+                                <span class="num"><strong>97</strong>%</span><em class="tit">好评度</em>
+                            </div>
+                            <div class="p-tags">
+                                <em>设计一流</em><em>清晰度高</em><em>反应超快</em><em>颜色绚丽</em>
+                            </div>
+                        </div>
+                        <div class="p-comment">
+                            <span class="tit">累计评价</span>309459 条
+                        </div>
+                    </td>
+                    <td class="td-empty">
+                        &nbsp;
+                    </td>
+                    <td class="td-empty">
+                        &nbsp;
+                    </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <td v-for="sku in contrastSpuList" :key="sku.id">
+                        <div class="goods-item" data-sku="100009219518">
+                            <div class="p-img" clstag="shangpin|keycount|compare|mainpic">
+                                <a href="javascript:void(0);" target="_blank">
+                                    <div>
+                                        <span>{{sku.title}}</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="p-slider">
+                                <span class="slider-prev slider-disable"></span>
+                                <span class="slider-next"></span>
+                            </div>
+                            <div class="p-price">
+                                <span price="p100009219518">¥&nbsp;<strong>{{ly.formatPrice(sku.price)}}</strong></span>
+                            </div>
+                            <div class="p-btnbox">
+                                <a href="XXXX.html" target="_blank" class="btn-primary" clstag="shangpin|keycount|compare|ljchakan">立即查看</a>
+                                <a href="javascript:;" class="btn-del" clstag="shangpin|keycount|compare|shanchu" style="display: none;">删除</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var vm = new Vue({
+        el : "#contrastVm",
+        data : {
+            ly,
+            contrastSpuList: [],
+        },
+        created(){
+            this.queryContrastParams()
+        },
+        methods : {
+            queryContrastParams(){
+                const skuId = ly.getUrlParam("skuId");
+                ly.http.post("/item/contrast/"+skuId)
+                    .then((resp) => {
+                        this.contrastSpuList = resp.data;
+                    })
+            },
+        }
+    })
+</script>
+</html>

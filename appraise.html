@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+        <title>乐优商城--商品搜索结果页</title>
+        <link rel="icon" href="assets/img/favicon.ico">
+        <link href="./css/material.css" rel="stylesheet">
+        <link href="./css/vuetify.min.css" rel="stylesheet">
+        <script src="./js/vue/vue.js"></script>
+        <script src="./js/vue/vuetify.js"></script>
+        <script src="./js/axios.min.js"></script>
+        <script src="./js/common.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/webbase.css"/>
+        <link rel="stylesheet" type="text/css" href="css/pages-list.css"/>
+        <link rel="stylesheet" type="text/css" href="css/widget-cartPanelView.css"/>
+        <style type="text/css">
+            * {
+                box-sizing: unset;
+            }
+
+            .btn-arrow, .btn-arrow:visited, .btn-arrow:link, .btn-arrow:active {
+                width: 46px;
+                height: 23px;
+                border: 1px solid #DDD;
+                background: #FFF;
+                line-height: 23px;
+                font-family: "\5b8b\4f53";
+                text-align: center;
+                font-size: 16px;
+                color: #AAA;
+                text-decoration: none;
+                out-line: none
+            }
+
+            .btn-arrow:hover {
+                background-color: #1299ec;
+                color: whitesmoke;
+            }
+
+            .top-pagination {
+                display: block;
+                padding: 3px 15px;
+                font-size: 11px;
+                font-weight: 700;
+                line-height: 18px;
+                color: #999;
+                text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+                text-transform: uppercase;
+                float: right;
+                margin-top: 6px
+            }
+
+            .top-pagination span {
+                margin-right: 10px;
+            }
+
+            .logo-list li {
+                padding: 8px;
+            }
+
+            .logo-list li:hover {
+                background-color: #f3f3f3;
+            }
+
+            .type-list a:hover {
+                color: #1299ec;
+            }
+
+            .skus {
+                list-style: none;
+            }
+
+            .skus li {
+                list-style: none;
+                display: inline-block;
+                float: left;
+                margin-left: 2px;
+                border: 2px solid #f3f3f3;
+            }
+
+            .sui-nav > .active > a:focus {
+                background-color: #c81623 !important;
+            }
+
+            .skus li.selected {
+                border: 2px solid #dd1144;
+            }
+
+            .skus img {
+                width: 25px;
+                height: 25px;
+            }
+        </style>
+        <script type="text/javascript" src="plugins/jquery/jquery.min.js"></script>
+    </head>
+
+    <body>
+
+        <div id="searchApp">
+            <div id="nav-bottom">
+                <ly-top/>
+            </div>
+            <!--list-content-->
+            <div class="main">
+                <div class="py-container">
+                    <div>
+                        订　单　号：<span class="attr" style="overflow: hidden;white-space:nowrap;">
+                        <em>{{order.orderId}}</em>
+                    </span>
+                    <div>
+                        商品名称：<span class="attr" style="overflow: hidden;white-space:nowrap;">
+                        <em>{{sku.title}}</em>
+                    </span>
+                    </div>
+
+                    <div class="p-img"><img :src="sku.images" alt="" style="width: 100px"></a>
+                    </div>
+                    <div class="price"><strong><em>¥</em>
+                        <i>{{ly.formatPrice(sku.price)}}</i></strong>
+                    </div>
+                </div>
+
+
+                <div>
+                    商品评价：<textarea style="width: 500px;height: 150px;border: 1px solid black"
+                                   v-model="appraiseContext"></textarea>
+                </div>
+                <div>
+                    <v-btn class="red" style="width: 550px;padding: 10px" @click="onSubmit">提交</v-btn>
+                </div>
+            </div>
+
+        </div>
+        <script type="text/javascript">
+            //判断是否有搜索条件
+
+            /*注意：凡是要在页面html部分使用的vue对象，必须在data中定义。在js中使用的vue对象，只要引入即可。*/
+            var vm = new Vue({
+                el: "#searchApp",
+                data: {
+                    ly,
+                    skuId: 0,
+                    orderId: 0,
+                    sku: {},
+                    order: {},
+                    appraiseContext: "",
+                },
+                computed: {},
+                created() {
+                    // 有token，曾经登录过，查询用户信息
+                    ly.http.get("/auth/verify").then(() => {
+                        //获取地址栏的查询条件
+                        this.skuId = ly.getUrlParam("skuId")
+                        if (!this.skuId) {
+                            alert("参数异常")
+                            this.gotoIndex();
+                        }
+                        //获取地址栏的查询条件
+                        this.orderId = ly.getUrlParam("orderId")
+                        if (!this.orderId) {
+                            alert("参数异常")
+                            this.gotoIndex();
+                        }
+
+                        ly.http.get("/item/sku/" + this.skuId).then(resp => {
+                            this.sku = resp.data;
+                        }).catch(() => {
+                            alert("商品号错误或商品已经不存在")
+                        });
+                        ly.http.get("/order/canAppraise?orderId=" + this.orderId + "&skuId=" + this.skuId).then(resp => {
+                            this.order = resp.data;
+                        }).catch(() => {
+                            alert("订单异常");
+                            this.gotoIndex();
+                        })
+
+
+                    }).catch(() => {
+                        // 去登录
+                        this.gotoLogin();
+                    });
+                },
+                watch: {},
+                methods: {
+                    gotoLogin() {
+                        window.location = "login.html?returnUrl=" + window.location;
+                    },
+                    gotoIndex() {
+                        window.location = "http://www.leyou.com/"
+                    },
+                    onSubmit() {
+                        ly.http.post("/appraise", {
+                            skuId: this.skuId,
+                            orderId: this.orderId,
+                            context: this.appraiseContext
+                        }).then(() => {
+                            alert("评论成功，即将返回首页")
+                            this.gotoIndex();
+                        }).catch(() => {
+                            alert("评论失败，请重试！")
+                        });
+                    }
+                },
+                components: {
+                    lyTop: () => import("./js/pages/top.js"),
+                }
+            });
+
+
+        </script>
+        <!-- 底部栏位 -->
+        <!--页面底部，由js动态加载-->
+        <div class="clearfix footer"></div>
+        <script type="text/javascript">$(".footer").load("foot.html");</script>
+        <!--页面底部END-->
+
+    </body>
+    <!--购物车单元格 模板-->
+    <script type="text/template" id="tbar-cart-item-template">
+        <div class="tbar-cart-item">
+            <div class="jtc-item-promo">
+                <em class="promo-tag promo-mz">满赠<i class="arrow"></i></em>
+                <div class="promo-text">已购满600元，您可领赠品</div>
+            </div>
+            <div class="jtc-item-goods">
+                <span class="p-img"><a href="#" target="_blank"><img src="{2}" alt="{1}" height="50"
+                                                                     width="50"/></a></span>
+                <div class="p-name">
+                    <a href="#">{1}</a>
+                </div>
+                <div class="p-price"><strong>¥{3}</strong>×{4}</div>
+                <a href="#none" class="p-del J-del">删除</a>
+            </div>
+        </div>
+    </script>
+    <!--侧栏面板结束-->
+    <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#service").hover(function () {
+                $(".service").show();
+            }, function () {
+                $(".service").hide();
+            });
+            $("#shopcar").hover(function () {
+                $("#shopcarlist").show();
+            }, function () {
+                $("#shopcarlist").hide();
+            });
+
+        })
+    </script>
+    <script type="text/javascript" src="js/model/cartModel.js"></script>
+    <script type="text/javascript" src="js/czFunction.js"></script>
+    <script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
+    <script type="text/javascript" src="js/widget/cartPanelView.js"></script>
+
+
+</html>

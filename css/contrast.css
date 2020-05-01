@@ -1,0 +1,145 @@
+ul li{
+    list-style-type:none;
+}
+.root61  {
+    margin-right:-606px;
+}
+
+ .tab-con {
+    border:2px solid #7abd54;
+    display:inline-block;
+    border-top:none;
+}
+
+#goto-contrast {
+    display:block;
+    width:59px;
+    height:30px;
+    font:bold 14px/30px verdana;
+    margin-left:13px;
+    margin-bottom:11px;
+    border-radius:3px;
+    background:#fff;
+    border:1px solid #ddd;
+    color:#ccc;
+    cursor:default;
+}
+
+.del-items:hover,
+.btn-compare:hover,
+.del-comp-item:hover {
+    cursor:pointer;
+}
+.del-comp-item {
+    padding-left:10px;
+}
+ .pop-inner {
+    height:133px;
+}
+ .diff-hd .tab-btns {
+    height:32px;
+    border:1px solid #ddd;
+    border-bottom:2px solid #7abd54;
+    _overflow:hidden;
+}
+ .tab-btns a {
+    color:#666;
+}
+ .diff-hd {
+    position:relative;
+}
+ .tab-btns .current {
+    position:relative;
+    left:-1px;
+    margin-top:-4px;
+    height:36px;
+    background:#fff;
+    border:2px solid #7abd54;
+    border-bottom:0;
+}
+ .tab-btns .current a {
+    color:#7abd54;
+}
+ .tab-btns .current a:hover {
+    text-decoration:none;
+}
+ .diff-hd .operate {
+    width:190px;
+    text-align:right;
+    position:absolute;
+    right:0;
+    top:0;
+    padding-right:22px;
+    height:30px;
+    line-height:30px;
+    clear:both;
+}
+ .diff-hd li {
+    float:left;
+    position:relative;
+    width:80px;
+    height:30px;
+    line-height:30px;
+    text-align:center;
+    *zoom:1;
+    font:14px/30px 'microsoft yahei';
+}
+ .operate .btn-compare {
+    margin-top:2px;
+}
+ div.diff-items {
+    padding:6px;
+    color:#ccc;
+    height:90px;
+    overflow:hidden;
+    display:inline-block
+}
+ .diff-items dl, .scroll-con dl {
+    float:left;
+    overflow:hidden;
+    margin-right:10px;
+    padding:17px 10px 12px 0;
+    border-right:1px dotted #7abd54;
+}
+ .diff-items dt, .scroll-con dt,#scroll-con-inner .dt {
+    float:left;
+    margin-right:5px;
+    width:48px;
+    height:48px;
+    text-align:center;
+    color:#ccc;
+    border:1px solid #fff;
+    font:36px/48px arial;
+    overflow:hidden;
+}
+ .diff-items dd, .scroll-con dd,#scroll-con-inner .dd {
+    float:left;
+    width:140px;
+}
+ a.diff-item-name {
+    height:3em;
+    line-height:1.5em;
+    overflow:hidden;
+    display:block;
+    color:#333;
+}
+ .del-comp-item {
+    visibility:hidden;
+    color:#005aa0;
+}
+ .show-del-comp-item .del-comp-item {
+    visibility:visible;
+}
+ .hasItem dt {
+    border:0;
+}
+ .diff-bd {
+    position:relative;
+}
+ .diff-operate {
+    position:absolute;
+    right:22px;
+    top:22px;
+    width:85px;
+    text-align:center;
+}
